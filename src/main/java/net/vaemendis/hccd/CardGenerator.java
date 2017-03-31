@@ -31,6 +31,7 @@ public class CardGenerator {
             String html = FileUtils.readFileToString(projectFiles.getHtmlFile());
             Document doc = Jsoup.parse(html);
             String card = doc.select(".card").first().outerHtml();
+	    String headInsertion = doc.select(".head").first().outerHtml();
             Template template = Mustache.compiler().escapeHTML(false).defaultValue("[NOT FOUND]").compile(card);
             Iterable<CSVRecord> records = getData(projectFiles.getCsvFile(), config);
 
@@ -48,7 +49,7 @@ public class CardGenerator {
 
 
             StringBuilder sb = new StringBuilder();
-            writeHeader(sb, projectFiles.getCssFile().getName());
+            writeHeader(sb, projectFiles.getCssFile().getName(), headInsertion);
 
             Iterator<CSVRecord> recordIter = recordList.iterator();
             int rows = config.getGridRowNumber();
@@ -82,7 +83,7 @@ public class CardGenerator {
         }
     }
 
-    private static void writeHeader(StringBuilder sb, String cssFilePath) {
+    private static void writeHeader(StringBuilder sb, String cssFilePath, String headInsertion) {
         sb.append("<!doctype html>" +
                 "<html>" +
                 "<head>" +
@@ -100,7 +101,8 @@ public class CardGenerator {
                 "    display:block;        \n" +
                 "    clear: both;\n" +
                 "}\n" +
-                "</style>\n</head><body>");
+                "</style>\n" + headInsertion +
+		"\n</head><body>");
     }
 
     private static void writeFooter(StringBuilder sb) {
