@@ -34,7 +34,7 @@ public class MainForm extends JFrame implements UserConfiguration {
     private final JRadioButton excelRadio;
     private final JSpinner rowSpinner;
     private final JSpinner colSpinner;
-    private final String[] delimiters = {";", ","};
+    private final String[] delimiters = {",", ";"};
     private final JComboBox<String> delimiterBox;
     private final JTextField cardFilter;
     private String watchedFilePath;
@@ -281,7 +281,7 @@ public class MainForm extends JFrame implements UserConfiguration {
         } else {
             excelRadio.setSelected(false);
         }
-        delimiterBox.setSelectedItem(prefs.get(PREF_DELIMITER, ";"));
+        delimiterBox.setSelectedItem(prefs.get(PREF_DELIMITER, ","));
         cardFilter.setText(prefs.get(PREF_CARD_FILTER, ""));
         watchedFilePath = prefs.get(PREF_WATCHED_FILE, null);
 
